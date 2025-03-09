@@ -27,15 +27,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#25292e',
     marginVertical: 10,
   },
-  time: {
-    fontSize: 18,
-    marginHorizontal: 10,
-    fontWeight: 'bold',
-  },
-  label: {
-    fontSize: 18,
-    flex: 1,
-    color: 'gray',
-  },
-
 });

@@ -1,36 +1,50 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { Link } from 'expo-router';
-import { useState } from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Link} from 'expo-router';
+import { useTimer } from '@/context/timerContext';
 
 import TimerAdjuster from '@/components/TimerAdjuster';
 import RoundsAdjuster from '@/components/RoundsAdjuster';
 
-export default function Index() {
-  const [workTime, setWorkTime] = useState<number>(180);
-  const [breakTime, setBreakTime] = useState<number>(60);
-  const [rounds, setRounds] = useState<number>(8);
+export default function ConfigScreen() {
+  const { workTime, setWorkTime, breakTime, setBreakTime, rounds, setRounds } = useTimer();
 
   return (
     <View style={styles.container}>
       <TimerAdjuster
         label="Work"
         value={workTime}
-        onIncrement={() => { setWorkTime((prev: number) => Math.min(prev + 15, 300)) }}
-        onDecrement={() => { setWorkTime((prev: number) => Math.max(prev - 15, 15)) }}
+        onIncrement={() => { setWorkTime(Math.min(workTime + 15, 300))}}
+        onDecrement={() => { setWorkTime(Math.max(workTime - 15, 15)) }}
       />
       <TimerAdjuster
         label="Break"
         value={breakTime}
-        onIncrement={() => { setBreakTime((prev: number) => Math.min(prev + 5, 60)) }}
-        onDecrement={() => { setBreakTime((prev: number) => Math.max(prev - 5, 5)) }}
+        onIncrement={() => { setBreakTime(Math.min(breakTime + 5, 60)) }}
+        onDecrement={() => { setBreakTime(Math.max(breakTime - 5, 5)) }}
       />
       <RoundsAdjuster
         value={rounds}
-        onIncrement={() => { setRounds((prev: number) => Math.min(prev + 1, 15)); }}
-        onDecrement={() => { setRounds((prev: number) => Math.max(prev - 1, 1)); }}
+        onIncrement={() => { setRounds(Math.min(rounds + 1, 15)); }}
+        onDecrement={() => { setRounds(Math.max(rounds - 1, 1)); }}
+      />
+      <TimerAdjuster
+        label= "Preparation time"
+        value = {0}
+        onIncrement = {() => {}}
+        onDecrement = {() => {}}
+      />
+      <TimerAdjuster
+        label= "Switch during round"
+        value={0}
+        onIncrement = {() => {}}
+        onDecrement = {() => {}}
       />
 
-      <Link style={styles.link} href="./timer" >Start</Link>
+      <Link href="./timer" asChild>
+        <Pressable style={styles.button}>
+          <Text style={styles.buttonText}>Start</Text>
+        </Pressable>
+      </Link>
     </View>
   );
 }
@@ -42,11 +56,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#25292e',
+    padding: 20,
+    paddingHorizontal: 100,
   },
-  text: {
-    color: 'white',
+  button: {
+    backgroundColor: '#2a9d8f',
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: 'center',
+    width: 100,
   },
-  link: {
-    color: 'lightblue',
-  }
-}); 
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
