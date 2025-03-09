@@ -1,4 +1,6 @@
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import React from 'react';
+import { View, StyleSheet } from "react-native";
+import { Button, Card, Text } from 'react-native-paper';
 
 interface TimerAdjusterProps {
   label: string;
@@ -22,12 +24,12 @@ export default function TimeAdjuster({ label, value, onIncrement, onDecrement }:
         <Text style={styles.label}>{label}</Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Pressable style={styles.button} onPress={onDecrement}>
+        <Button mode="contained" onPress={onDecrement} style={styles.button}>
           <Text style={styles.buttonText}>-</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={onIncrement}>
-          <Text style={styles.buttonText} >+</Text>
-        </Pressable>
+        </Button>
+        <Button mode="contained" onPress={onIncrement} style={styles.button}>
+          <Text style={styles.buttonText}>+</Text>
+        </Button>
       </View>
     </View>
   );
@@ -38,7 +40,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between', 
-    backgroundColor: '#25292e',
     marginBottom: 10,
     paddingHorizontal: 10,
   },
@@ -49,11 +50,11 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: '#000',
   },
   label: {
     fontSize: 18,
-    color: '#d3d3d3',
+    color: '#555',
     marginTop: 5,
   },
   buttonsContainer: {
@@ -61,17 +62,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   button: {
-    backgroundColor: '#4CAF50',
-    padding: 20,
     marginHorizontal: 10,
-    borderRadius: 50,
-    width: 80,
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonText: {
-    fontSize: 30,
+    fontSize: 20,
     color: '#fff',
     fontWeight: 'bold',
   },

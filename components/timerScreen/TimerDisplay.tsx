@@ -1,22 +1,24 @@
-import { Text, View, StyleSheet } from "react-native";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text } from 'react-native-paper';
 
 interface TimerDisplayProps {
     seconds: number;
     isRunning: boolean;
 }
 
-export default function TimerDisplay({seconds, isRunning}: TimerDisplayProps) {
+export default function TimerDisplay({ seconds, isRunning }: TimerDisplayProps) {
     
   const formattedTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
-        return `${minutes.toString().padStart(2,'0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     };
 
   return (
-    <View style = {styles.container}>
-      <Text style = {styles.timer}>{formattedTime(seconds)}</Text>
-      <Text style={isRunning ? styles.running : styles.paused}>
+    <View style={styles.container}>
+      <Text style={styles.timer}>{formattedTime(seconds)}</Text>
+      <Text selectable={false} style={isRunning ? styles.running : styles.paused}>
         {isRunning ? 'Running...' : 'Paused'}
       </Text>
     </View>
@@ -26,14 +28,13 @@ export default function TimerDisplay({seconds, isRunning}: TimerDisplayProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   timer: {
-    fontSize: 80, // Ajuste de tamaño de fuente
-    color: '#fff',
+    fontSize: 80,
+    color: '#000',
     fontWeight: 'bold',
   },
   running: {

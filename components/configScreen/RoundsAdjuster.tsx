@@ -1,12 +1,14 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import React from 'react';
+import { View, StyleSheet } from "react-native";
+import { Button, Text } from 'react-native-paper';
 
-interface TimerAdjusterProps {
+interface RoundsAdjusterProps {
   value: number;
   onIncrement: () => void;
   onDecrement: () => void;
 }
 
-export default function TimerAdjuster({ value, onIncrement, onDecrement }: TimerAdjusterProps) {
+export default function RoundsAdjuster({ value, onIncrement, onDecrement }: RoundsAdjusterProps) {
 
   return (
     <View style={styles.container}>
@@ -15,12 +17,12 @@ export default function TimerAdjuster({ value, onIncrement, onDecrement }: Timer
         <Text style={styles.label}>Rounds </Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Pressable style={styles.button} onPress={onDecrement}>
+        <Button mode="contained" onPress={onDecrement} style={styles.button}>
           <Text style={styles.buttonText}>-</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={onIncrement}>
+        </Button>
+        <Button mode="contained" onPress={onIncrement} style={styles.button}>
           <Text style={styles.buttonText}>+</Text>
-        </Pressable>
+        </Button>
       </View>
     </View>
   );
@@ -30,42 +32,34 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', // Center horizontally
-    backgroundColor: '#25292e',
+    justifyContent: 'space-between', 
+    backgroundColor: '#blank',
     marginBottom: 10,
     paddingHorizontal: 10,
   },
   roundsContainer: {
-    alignItems: 'center', // Center horizontally
-    backgroundColor: '#25292e',
+    alignItems: 'center', 
   },
   buttonsContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
   button: {
-    backgroundColor: '#4CAF50',
-    padding: 20,
     marginHorizontal: 10,
-    borderRadius: 50,
-    width: 80,
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonText: {
-    fontSize: 30,
+    fontSize: 20,
     color: '#fff',
     fontWeight: 'bold',
   },
   rounds: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: 'black',
   },
   label: {
     fontSize: 18,
-    color: '#d3d3d3',
+    color: '#555',
     marginTop: 5,
   },
 });

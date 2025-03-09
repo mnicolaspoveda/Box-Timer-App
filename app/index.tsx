@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 import { useTimer } from '@/contexts/timerContext';
+import {Button} from 'react-native-paper';
 
 import TimerAdjuster from '@/components/configScreen/TimeAdjuster';
 import RoundsAdjuster from '@/components/configScreen/RoundsAdjuster';
@@ -48,9 +49,9 @@ export default function ConfigScreen() {
       </View>
       <View style={styles.buttonContainer}>
         <Link href="./timer" asChild>
-          <Pressable style={styles.button}>
+          <Button  mode="contained">
             <Text style={styles.buttonText}>Start</Text>
-          </Pressable>
+          </Button>
         </Link>
       </View>
     </View>
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#25292e',
+    backgroundColor: '#fff',
     padding: 10,
   },
   controlsContainer: {
@@ -75,13 +76,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginBottom: 50,
-  },
-  button: {
-    backgroundColor: '#2a9d8f',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    width: '80%',
   },
   buttonText: {
     color: '#fff',
