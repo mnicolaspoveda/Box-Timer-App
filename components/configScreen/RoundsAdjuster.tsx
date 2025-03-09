@@ -38,9 +38,6 @@ const styles = StyleSheet.create({
   roundsContainer: {
     alignItems: 'center', // Center horizontally
     backgroundColor: '#25292e',
-    marginVertical: 10,
-    padding: 10,
-
   },
   buttonsContainer: {
     flexDirection: 'row',

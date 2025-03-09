@@ -13,7 +13,7 @@ export default function RootLayout() {
             options={{ title: "Configuración" }}
           />
           <Stack.Screen
-            name="timer/index"
+            name="timer"
             options={{ title: 'Timer' }}
           />
         </Stack>

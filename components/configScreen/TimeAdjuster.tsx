@@ -8,6 +8,7 @@ interface TimerAdjusterProps {
 }
 
 export default function TimeAdjuster({ label, value, onIncrement, onDecrement }: TimerAdjusterProps) {
+  
   const formattedTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -36,14 +37,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', // Center horizontally
+    justifyContent: 'space-between', 
     backgroundColor: '#25292e',
     marginBottom: 10,
     paddingHorizontal: 10,
   },
   timeContainer: {
     flexDirection: 'column',
-    alignItems: 'center', // Center horizontally
+    alignItems: 'center', 
   },
   time: {
     fontSize: 48,

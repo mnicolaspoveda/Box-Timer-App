@@ -6,12 +6,12 @@ import TimerAdjuster from '@/components/configScreen/TimeAdjuster';
 import RoundsAdjuster from '@/components/configScreen/RoundsAdjuster';
 
 export default function ConfigScreen() {
-  const { 
+  const {
     workTime, setWorkTime,
     breakTime, setBreakTime,
     rounds, setRounds,
     preparationTime, setPreparationTime,
-    switchTime, setSwitchTime} = useTimer();
+    switchTime, setSwitchTime } = useTimer();
 
   return (
     <View style={styles.container}>
@@ -68,11 +68,10 @@ const styles = StyleSheet.create({
   },
   controlsContainer: {
     width: '95%',
-    marginBottom: 100,
+    marginBottom: 20,
     flex: 1,
   },
   buttonContainer: {
-    flex: 0,
     width: '100%',
     alignItems: 'center',
     marginBottom: 50,

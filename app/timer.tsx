@@ -5,19 +5,36 @@ import { useState, useEffect } from 'react';
 import TimerDisplay from '@/components/timerScreen/TimerDisplay';
 
 export default function TimerScreen() {
-  const {rounds, workTime, breakTime} = useTimer(); //contexto
-  
+  const { rounds, workTime, breakTime } = useTimer(); //contexto
+
   const [timeRemaining, setTimeRemaining] = useState(workTime);
   const [isRunning, setIsRunning] = useState(false);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-  
+  const [currentRound, setCurrentRound] = useState(1);
+  const [isWorking, setIsWorking] = useState(true);
+
   useEffect(() => {
     if (isRunning && timeRemaining > 0) {
       const id = setInterval(() => {
         setTimeRemaining((time) => time - 1);
       }, 1000);
-    setIntervalId(id);
-    return () => clearInterval(id);
+      setIntervalId(id);
+      return () => clearInterval(id);
+    }
+    else if (isRunning && timeRemaining === 0) {
+      if (isWorking) {
+        //cambiar al break
+        setTimeRemaining(breakTime);
+        setIsWorking(false);
+      } else {
+        if (currentRound < rounds && !isWorking) {
+          setCurrentRound((round) => round + 1);
+          setTimeRemaining(workTime);
+          setIsWorking(true);
+        } else {
+          setIsRunning(false);
+        }
+      }
     }
   }, [isRunning, timeRemaining]);
 
@@ -29,19 +46,24 @@ export default function TimerScreen() {
     }
     setIsRunning(false);
   };
-  const resetTimer = () => {
+  const resetTimer = () => {//deberia antes preguntar con un modal si esta seguro de resetear
     setTimeRemaining(workTime);
     setIsRunning(false);
+    setIsWorking(true);
+    setCurrentRound(1);
     if (intervalId) {
       clearInterval(intervalId);
     }
   };
 
+
   return (
     <View style={styles.container}>
+      <Text style={styles.text}>Round {currentRound}/{rounds}</Text>
+      <Text style={styles.text}>{isWorking ? 'Working' : 'Break'}</Text>
       <TimerDisplay seconds={timeRemaining} isRunning={isRunning} />
       <Text style={styles.text}>Controls</Text>
-      <View style={styles.buttonContainer}>
+      <View style={styles.buttonsContainer}>
         <Pressable style={styles.button} onPress={startTimer}>
           <Text style={styles.buttonText}>Start</Text>
         </Pressable>
@@ -70,9 +92,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 20,
   },
-  buttonContainer: {
+  buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '80%',
   },
   button: {
