@@ -1,8 +1,8 @@
 import { Text, View, StyleSheet, Pressable } from 'react-native';
-import { useTimer } from '@/context/timerContext';
+import { useTimer } from '@/contexts/timerContext';
 import { useState, useEffect } from 'react';
 
-import TimerDisplay from '@/components/TimerDisplay';
+import TimerDisplay from '@/components/timerScreen/TimerDisplay';
 
 export default function TimerScreen() {
   const {rounds, workTime, breakTime} = useTimer(); //contexto

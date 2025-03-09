@@ -1,19 +1,30 @@
 import { Stack } from "expo-router";
-import { TimerProvider } from "@/context/timerContext";
+import { TimerProvider } from "@/contexts/timerContext";
+import { View, StyleSheet } from "react-native";
+
 
 export default function RootLayout() {
   return (
-  <TimerProvider>
-    <Stack>
-      <Stack.Screen
-        name="config"
-        options={{ title: "Configuración" }}
-      />
-      <Stack.Screen 
-        name="timer" 
-        options={{title: 'Timer'}} 
-      />
-    </Stack>
-  </TimerProvider>
+    <TimerProvider>
+      <View style={styles.container}>
+        <Stack>
+          <Stack.Screen
+            name="index"
+            options={{ title: "Configuración" }}
+          />
+          <Stack.Screen
+            name="timer/index"
+            options={{ title: 'Timer' }}
+          />
+        </Stack>
+      </View>
+    </TimerProvider>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#25292e',
+  },
+});
