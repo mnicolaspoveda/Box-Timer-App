@@ -6,7 +6,7 @@ export function useTimer(workTime: number, breakTime: number, preparationTime: n
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [currentRound, setCurrentRound] = useState(1);
   const [isOnRound, setIsOnRound] = useState(preparationTime === 0);
-  const [stage, setStage] = useState<'Switch'|'Prepare' | 'onRound' | 'Break'>(preparationTime > 0 ? 'Prepare' : 'onRound');
+  const [stage, setStage] = useState<'Switch' | 'Prepare' | 'onRound' | 'Break'>(preparationTime > 0 ? 'Prepare' : 'onRound');
   const [initialTime, setInitialTime] = useState(preparationTime > 0 ? preparationTime : workTime);
 
   const switchAlert = () => {
@@ -15,47 +15,52 @@ export function useTimer(workTime: number, breakTime: number, preparationTime: n
     setTimeout(() => {
       setStage(previousStage);
     }, 1000);
-  }
+  };
 
   useEffect(() => {
-    if (isRunning && timeRemaining > 0) {
-      const id = setInterval(() => {
-        setTimeRemaining((time) => time - 1);
-        if (isOnRound && workTime != timeRemaining  && (timeRemaining - 1) % switchTime === 0) {
-          switchAlert();
-        }
-      }, 1000);
-      setIntervalId(id);
-      return () => clearInterval(id);
-    } else if (isRunning && timeRemaining === 0) {
-      if (stage === 'Prepare') {
-        setTimeRemaining(workTime);
-        setIsOnRound(true);
-        setStage('onRound');
-        setInitialTime(workTime);
-      } else if (isOnRound && currentRound < rounds) {
-        setTimeRemaining(breakTime);
-        setIsOnRound(false);
-        setStage('Break');
-        setInitialTime(breakTime);
+    if (isRunning)
+      if (timeRemaining > 0) {
+        const id = setInterval(() => {
+          setTimeRemaining((time) => time - 1);
+          if (isOnRound && workTime !== timeRemaining && (timeRemaining - 1) % switchTime === 0) {
+            switchAlert();
+          }
+        }, 1000);
+        setIntervalId(id);
+        return () => clearInterval(id);
       } else {
-        if (currentRound < rounds) {
-          setCurrentRound((round) => round + 1);
-          setTimeRemaining(workTime);
-          setIsOnRound(true);
-          setStage('onRound');
-          setInitialTime(workTime);
-        } else {
-          setIsRunning(false);
-        }
+        handleTimerEnd();
       }
-    }
     return () => {
       if (intervalId) {
         clearInterval(intervalId);
       }
     };
   }, [isRunning, timeRemaining, breakTime, workTime, rounds, stage, isOnRound, currentRound]);
+
+  const handleTimerEnd = () => {
+    if (stage === 'Prepare') {
+      setTimeRemaining(workTime);
+      setIsOnRound(true);
+      setStage('onRound');
+      setInitialTime(workTime);
+    } else if (isOnRound && currentRound < rounds) {
+      setTimeRemaining(breakTime);
+      setIsOnRound(false);
+      setStage('Break');
+      setInitialTime(breakTime);
+    } else {
+      if (currentRound < rounds) {
+        setCurrentRound((round) => round + 1);
+        setTimeRemaining(workTime);
+        setIsOnRound(true);
+        setStage('onRound');
+        setInitialTime(workTime);
+      } else {
+        setIsRunning(false);
+      }
+    }
+  };
 
   const startTimer = () => setIsRunning(true);
   const pauseTimer = () => {
@@ -75,6 +80,25 @@ export function useTimer(workTime: number, breakTime: number, preparationTime: n
     }
   };
 
+  const resetCurrentStage = () => setTimeRemaining(initialTime);
+
+  const nextStage = () => {
+    if (currentRound < rounds) {
+      if (isOnRound) {
+        setTimeRemaining(breakTime);
+        setIsOnRound(false);
+        setStage('Break');
+        setInitialTime(breakTime);
+      } else {
+        setCurrentRound((round) => round + 1);
+        setTimeRemaining(workTime);
+        setIsOnRound(true);
+        setStage('onRound');
+        setInitialTime(workTime);
+      }
+    }
+  };
+
   return {
     timeRemaining,
     isRunning,
@@ -85,5 +109,7 @@ export function useTimer(workTime: number, breakTime: number, preparationTime: n
     startTimer,
     pauseTimer,
     resetTimer,
+    resetCurrentStage,
+    nextStage,
   };
 }
