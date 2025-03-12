@@ -49,7 +49,7 @@ export default function ConfigScreen() {
       </View>
       <View style={styles.buttonContainer}>
         <Link href="./timer" asChild>
-          <Button  mode="contained">
+          <Button mode="contained">
             <Text style={styles.buttonText}>Start</Text>
           </Button>
         </Link>
@@ -69,17 +69,16 @@ const styles = StyleSheet.create({
   },
   controlsContainer: {
     width: '95%',
-    marginBottom: 20,
-    flex: 1,
+    flex: 8,
   },
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
-    marginBottom: 50,
+    flex: 2,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: 'bold',
   },
 });

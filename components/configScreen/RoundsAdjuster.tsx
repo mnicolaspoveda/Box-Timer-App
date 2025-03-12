@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from "react-native";
-import { Button, Text } from 'react-native-paper';
+import { IconButton, Text } from 'react-native-paper';
 
 interface RoundsAdjusterProps {
   value: number;
@@ -17,12 +17,8 @@ export default function RoundsAdjuster({ value, onIncrement, onDecrement }: Roun
         <Text style={styles.label}>Rounds </Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Button mode="contained" onPress={onDecrement} style={styles.button}>
-          <Text style={styles.buttonText}>-</Text>
-        </Button>
-        <Button mode="contained" onPress={onIncrement} style={styles.button}>
-          <Text style={styles.buttonText}>+</Text>
-        </Button>
+        <IconButton icon="minus" size={50} mode="contained" onPress={onDecrement} />
+        <IconButton icon="plus" size={50} mode="contained" onPress={onIncrement} />
       </View>
     </View>
   );
@@ -38,19 +34,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   roundsContainer: {
-    alignItems: 'center', 
+    alignItems: 'flex-start', 
   },
   buttonsContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-  },
-  button: {
-    marginHorizontal: 10,
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff',
-    fontWeight: 'bold',
   },
   rounds: {
     fontSize: 48,

@@ -2,11 +2,11 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTimer } from '@/contexts/timerContext';
 import { useTimer as useCustomTimer } from '@/hooks/useTimer';
-import { Button, Text } from 'react-native-paper';
+import { Text, IconButton } from 'react-native-paper';
 import TimerDisplay from '@/components/timerScreen/TimerDisplay';
 
 export default function TimerScreen() {
-  const { rounds, workTime, breakTime, preparationTime } = useTimer(); //contexto
+  const { rounds, workTime, breakTime, preparationTime, switchTime} = useTimer(); //contexto
   const {
     timeRemaining,
     isRunning,
@@ -15,24 +15,21 @@ export default function TimerScreen() {
     startTimer,
     pauseTimer,
     resetTimer,
-  } = useCustomTimer(workTime, breakTime, preparationTime, rounds);
+    initialTime,
+  } = useCustomTimer(workTime, breakTime, preparationTime, rounds, switchTime); //logica de timer
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Round {currentRound}/{rounds}</Text>
+    <View style={[styles.container, { backgroundColor: isRunning ? '#000' : 'lime' }]}> 
+      <Text style={[styles.text, {color: isRunning ? 'white': 'black'}]}>Round {currentRound}/{rounds}</Text>
       <Text style={styles.text}>{stage}</Text>
-      <TimerDisplay seconds={timeRemaining} isRunning={isRunning} />
-      <Text style={styles.text}>Controls</Text>
+      <TimerDisplay seconds={timeRemaining} isRunning={isRunning} initialTime={initialTime}/>
       <View style={styles.buttonsContainer}>
-        <Button mode="contained" onPress={startTimer} style={styles.button}>
-          <Text style={styles.buttonText}>Start</Text>
-        </Button>
-        <Button mode="contained" onPress={pauseTimer} style={styles.button}>
-          <Text style={styles.buttonText}>Pause</Text>
-        </Button>
-        <Button mode="contained" onPress={resetTimer} style={styles.button}>
-          <Text style={styles.buttonText}>Reset</Text>
-        </Button>
+        {isRunning ? (
+          <IconButton icon="pause" size={70} mode="contained" onPress={pauseTimer} />
+        ) : (
+          <IconButton icon="play" size={70} mode="contained" onPress={startTimer} />
+        )}
+        <IconButton icon="stop" size={70} mode="contained" onPress={resetTimer} />
       </View>
     </View>
   );
@@ -51,15 +48,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 20,
+    
   },
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    width: '80%',
-  },
-  button: {
-    marginHorizontal: 10,
-    
+    justifyContent: 'space-around',
+    width: '90%',
+    marginBottom: 100,
   },
   buttonText: {
     color: '#fff',

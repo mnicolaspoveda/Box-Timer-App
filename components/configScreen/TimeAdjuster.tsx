@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from "react-native";
-import { Button, Card, Text } from 'react-native-paper';
+import { Button,IconButton, Text } from 'react-native-paper';
+
 
 interface TimerAdjusterProps {
   label: string;
@@ -24,12 +25,8 @@ export default function TimeAdjuster({ label, value, onIncrement, onDecrement }:
         <Text style={styles.label}>{label}</Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Button mode="contained" onPress={onDecrement} style={styles.button}>
-          <Text style={styles.buttonText}>-</Text>
-        </Button>
-        <Button mode="contained" onPress={onIncrement} style={styles.button}>
-          <Text style={styles.buttonText}>+</Text>
-        </Button>
+        <IconButton icon="minus" size={50}  mode="contained" onPress={onDecrement} />
+        <IconButton icon="plus" size={50}  mode="contained" onPress={onIncrement} />
       </View>
     </View>
   );
@@ -45,7 +42,7 @@ const styles = StyleSheet.create({
   },
   timeContainer: {
     flexDirection: 'column',
-    alignItems: 'center', 
+    alignItems: 'flex-start', 
   },
   time: {
     fontSize: 48,
@@ -60,13 +57,5 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-  },
-  button: {
-    marginHorizontal: 10,
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff',
-    fontWeight: 'bold',
   },
 });
